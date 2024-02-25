@@ -2,9 +2,10 @@ import ttkbootstrap as tb
 from vid2img import widgets, utils
 from vid2img.sections import VideoInfoSection, VideoSaveSection
 from vid2img.converter import Converter
+from vid2img.dialog import AboutDialog
 
 
-WINDOW_WIDTH = 850
+WINDOW_WIDTH = 880
 WINDOW_HEIGHT = 600
 
 
@@ -16,8 +17,10 @@ class App(tb.Window):
         self.iconbitmap("favicon.ico")
         self.geometry(f"{WINDOW_WIDTH}x{WINDOW_HEIGHT}")
         self.resizable(False, False)
+        self.protocol(name="WM_DELETE_WINDOW", func=self.close_app)
 
         self.converter: Converter
+        self.converter_list = []
         self.video_path = tb.StringVar()
 
         self.info_section: VideoInfoSection
@@ -28,11 +31,9 @@ class App(tb.Window):
         self.init_top_widgets()
         self.init_converter_widgets()
 
-
     def run(self):
         widgets.draw_widgets(self)
         self.mainloop()
-
 
     def configure_grids(self, row, col):
         for i in range(row):
@@ -40,7 +41,6 @@ class App(tb.Window):
 
         for i in range(col):
             self.grid_columnconfigure(i, weight=1)
-
 
     def init_top_widgets(self):
         # Header
@@ -54,7 +54,7 @@ class App(tb.Window):
             font=("Helvetica", 12),
         )
         self.help_btn = tb.Button(self, bootstyle="danger", text="Help")
-        self.about_btn = tb.Button(self, bootstyle="info", text="About")
+        self.about_btn = tb.Button(self, bootstyle="info", text="About", command=self.show_about_dialog)
 
         # File Selection Section
         self.file_label = tb.Label(
@@ -82,7 +82,6 @@ class App(tb.Window):
             command=None
         )
 
-
     def init_converter_widgets(self):
         self.info_label_frame = tb.LabelFrame(
             self, text="Video Information", bootstyle="info"
@@ -91,3 +90,28 @@ class App(tb.Window):
         self.save_label_frame = tb.LabelFrame(
             self, text="Save Images Options", bootstyle="info"
         )
+
+        
+    def show_about_dialog(self):
+        about = AboutDialog(self)
+        about.grab_set()
+        self.wait_window(about)
+    
+    def show_help_dialog(self):
+        pass
+    
+    
+    def close_app(self):
+        # Destroy converters if have
+        try:
+            if self.converter_list:
+                for converter in self.converter_list:
+                    converter.close()
+            else:
+                pass
+        except AttributeError:
+            pass
+        
+        # Destroy app
+        self.destroy()
+    

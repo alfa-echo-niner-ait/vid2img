@@ -40,6 +40,7 @@ class VideoInfoSection:
 
 class VideoSaveSection:
     def __init__(self, app, root) -> None:
+        self.app = app
         self.root = root
         self.selected_format: str
         self.img_formats = (
@@ -70,7 +71,7 @@ class VideoSaveSection:
         self.format_box.grid(row=0, column=1, padx=5, pady=5, sticky=tb.EW)
         self.format_box.set(self.img_formats[0])
         self.format_box.bind("<<ComboboxSelected>>", self.format_box_handler)
-        
+
         skip_frame_label = tb.Label(self.root, text="Skip Frames Per Image:")
         skip_frame_label.grid(row=1, column=0, padx=5, pady=5, sticky=tb.EW)
         self.skip_frames_box = tb.Entry(
@@ -108,11 +109,15 @@ class VideoSaveSection:
 
         self.progress_label.grid(row=5, column=0, columnspan=3, padx=5, pady=5)
         self.progress_bar.grid(row=6, column=0, columnspan=3, padx=5, pady=5, ipady=10)
-        # self.progress_bar.start(20)
-        # self.progress_bar['mode'] = tb.DETERMINATE
-        # self.progress_bar['value'] = 100
+        
 
     # Handlers
     def format_box_handler(self, event):
         self.selected_format = self.format_box.get()
         print(self.selected_format)
+        self.app.converter.image_format = self.format_box.get()
+        
+
+    def update_progress_status(self):
+        self.progress_bar['mode'] = tb.INDETERMINATE
+        self.progress_bar.start(20)

@@ -40,20 +40,20 @@ class Converter:
         
         
     def extract_frames(self):
+        while self.task_done == False:
+            for i in range(1, self.total_frames+1):
+                if i%self.skip_frames == 0:
+                    self.frame_counter += 1
+                    ret, frame = self.video.read()
+                    image_name = "Frame_" + str(self.frame_counter) + "." + self.image_format
+                    save_path = os.path.join(self.image_path, image_name)
+                    print(save_path)
+                    cv2.imwrite(save_path, frame)
+                    print(f"{image_name} saved!")
+                    time.sleep(1)
+                    
+            self.task_done = True
 
-        for i in range(1, self.total_frames+1):
-            if i%self.skip_frames == 0:
-                self.frame_counter += 1
-                ret, frame = self.video.read()
-                image_name = "Frame_" + str(self.frame_counter) + "." + self.image_format
-                save_path = os.path.join(self.image_path, image_name)
-                print(save_path)
-                cv2.imwrite(save_path, frame)
-                print(f"{image_name} saved!")
-                time.sleep(1)
-                
-        self.task_done = True
-        self.close()
 
     def close(self):
         self.video.release()

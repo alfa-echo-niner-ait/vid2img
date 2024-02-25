@@ -14,7 +14,7 @@ def draw_widgets(root):
 
     # Video Info Section
     root.info_label_frame.grid(
-        row=4, rowspan=2, column=0, padx=10, ipadx=5, pady=10, sticky=tb.NS
+        row=4, rowspan=2, column=0, padx=10, ipadx=5, pady=20, sticky=tb.NS
     )
     info_section = VideoInfoSection(root.info_label_frame)
     info_section.draw_sections()
@@ -27,7 +27,7 @@ def draw_widgets(root):
         columnspan=3,
         padx=10,
         ipadx=5,
-        pady=10,
+        pady=20,
         sticky=tb.NS,
     )
     save_section = VideoSaveSection(app=root, root=root.save_label_frame)
@@ -60,7 +60,7 @@ def create_header(root):
 
 
 def create_file_select(root):
-    root.file_label.grid(row=2, column=0, sticky=tb.EW, padx=5, pady=5)
+    root.file_label.grid(row=2, column=0, sticky=tb.EW, padx=30, pady=5)
     root.video_input_box.grid(row=2, column=1, pady=5, sticky=tb.EW)
     root.browse_btn.grid(row=2, column=2, sticky=tb.EW, pady=5)
 
