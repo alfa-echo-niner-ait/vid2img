@@ -6,6 +6,7 @@ The main purpose of this application is to help in extracting important footage 
 
 Developed by: `Ayub Ali Emon`
 *A Software Engineering Student of Shandong University of Science and Technology*
+
 `Under development...`
 
 ![image](https://github.com/alfa-echo-niner-ait/vid2img/assets/78315132/87f3cd87-86ce-4e0e-abea-e84002d9d5a1)
