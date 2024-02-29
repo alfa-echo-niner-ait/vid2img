@@ -7,6 +7,7 @@ A desktop application to extract image frames from videos, built using _Python's
 The main purpose of this application is to help in extracting important footage like CCTV for investigation and analysis. It is also a very easy tool to get the high-quality image frames from any of your favourite video clips.
 
 Developed by: `Ayub Ali Emon`
+
 *A Software Engineering Student of Shandong University of Science and Technology*
 
 
